@@ -1,0 +1,87 @@
+\documentclass[12pt, letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{tocloft}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{geometry}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\definecolor{myblue}{rgb}{0,0.55,0.9}
+\definecolor{mylightblue}{rgb}{0.2,0.6,1}
+
+\usepackage{sectsty}
+\sectionfont{\color{myblue}}
+\subsectionfont{\color{mylightblue}}
+
+\lstdefinestyle{mystyle}{
+    basicstyle=\ttfamily\footnotesize,
+    breaklines=true
+}
+
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
+
+\lstset{style=mystyle}
+
+\begin{document}
+
+\begin{center}
+    \includegraphics[width=0.35\textwidth]{logo.jpg}\\[1cm]
+    \textsc{\LARGE Université Catholique de Louvain - EPL}
+    \rule{\linewidth}{0.4pt}
+    {\huge \bfseries Cahier des Charges\\
+    be:bi en MicroPython \\[0.4cm] }
+    \rule{\linewidth}{0.4pt}\\[1.5cm]
+\end{center}
+
+\begin{flushleft}
+    \emph{Auteurs :}\\
+        \hspace{1cm}Enes \textsc{Tahiri}\\
+        \hspace{1cm}Prénom \textsc{Nom}\\
+        \hspace{1cm}Prénom \textsc{Nom}\\
+        \hspace{1cm}Prénom \textsc{Nom}
+\end{flushleft}
+
+\renewcommand{\contentsname}{Table des matières}
+\tableofcontents
+\vspace{10cm}
+
+\section*{Introduction}
+\addcontentsline{toc}{section}{Introduction}
+Dans le cadre d'un projet universitaire novateur, notre équipe a été chargée de développer be:bi’, un dispositif technologique avancé conçu pour aider les parents à surveiller et à prendre soin de leurs nourrissons. Ce projet, initié à la demande d'une organisation dédiée à l'amélioration des soins infantiles, vise à créer un outil utilisant la plateforme micro:bit pour fournir une surveillance fiable et sécurisée de l'état d'éveil et de l'alimentation des nourrissons.\\\\
+Au cœur de ce projet se trouve le développement d'un système embarqué capable de communiquer des informations essentielles entre deux unités : l'une attachée au nourrisson et l'autre en possession du parent ou du tuteur. Ce système transmettra non seulement l'état d'éveil du bébé, mais enregistrera également la quantité de lait consommée, en utilisant des techniques de cryptographie pour assurer une communication sécurisée entre les deux micro:bits.
+
+\section*{Fonctionnalité}
+\addcontentsline{toc}{section}{Fonctionnalité}
+\subsection{Fonctionnalités obligatoires}
+\begin{enumerate}
+    \item \textbf{Gestionnaire de version} : Mise en place du repo github.
+    \item \textbf{Echange entre les 2 be:bi} : Format TLV, [Type | Longueur | Contenu], utilisation du module radio
+    \item \textbf{Echange entre les be:bi sécurisé} : Le types des messages d'initiation de connexion est le \textbf{0x01}. Utilisation de \textsc{nonce} (nombre entier à usage unique) pour éviter de rejouer les messages. Le message doit-être pris en compte seulement
+    si la \textsc{nonce} n'a pas été vu par le passé.
+    \item \textbf{Etablissement de connexion} :
+    \begin{enumerate}
+        \item \textit{Initiation de la Connexion} : Le be:bi enfant envoie un message chiffré avec un nonce et un challenge au be:bi parent.
+        \item \textit{Traitement par le Parent} : Le be:bi parent déchiffre le message, vérifie son type, utilise le challenge pour configurer sa fonction random et génère un hash.
+        \item \textit{Confirmation de la Connexion} : Le be:bi parent envoie un message chiffré avec un nouveau nonce et le hash. La nouvelle clé est formée de la concaténation du mot de passe et du challenge de réponse.
+        \item \textit{Validation par l'Enfant} : Le be:bi enfant confirme que le hash correspond et forme sa nouvelle clé de la même manière que le parent.
+    \end{enumerate}
+    \item \textbf{Surveillance de l'état de veille du nourisson} : Communiquer l'état d'éveil du bébé sur le be:bi parent (endormi, agité, très agité) et rassurer l'enfant en fonction de cette état (via des sons ou signe lumineux)
+    \item \textbf{Quantité de lait ingurgitée} : interface utilisant les boutons et le panneau LED du be:bi, elle doit permettre sur le be:bi parent de saisir la prise d'une nouvelle dose de lait, de supprimer une dose de lait, de ré-initialiser à zéro la quantité de doses de lait. Sur le be:bi parent et enfant, permettre de consulter la quantité de lait consommé.
+\end{enumerate}
+\subsection{Fonctionnalités additionnelles}
+\begin{enumerate}
+    \item \textbf{Surveillance de la Température Corporelle} : Utilisation de capteurs pour surveiller la température corporelle du nourrisson, avec des alertes en cas d'anomalies.
+    \item \textbf{Mode Veilleuse} : Une veilleuse intégrée que les parents peuvent activer/désactiver pour apaiser le bébé et faciliter son endormissement.
+\end{enumerate}
+
+
+\section*{Délai}
+\addcontentsline{toc}{section}{Délai}
+\begin{enumerate}
+    \item \textbf{Cahier des charges et Planning} : 22 novembre 2023 à 18h00. Max 3 pages, format PDF. Planning en utilisant un tableur.
+    \item \textbf{Projet (code et rapport} : 12 décembre 2023, rapport maximin de 4 pages au format PDF et fait sous LaTeX
+    \item \textbf{Présentation de groupe} : 15 décembre 2023 à 10h00. Durée de 4 minutes, max 4 slides, rendu en format PDF + produire une vidéo de la démonstration.
+\end{enumerate}
+
+\end{document}
