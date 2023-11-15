@@ -7,8 +7,8 @@ Groupe B.26
 Membres :
 * Enes Tahiri
 * Ethan Mertens
-* Prénom Nom
-* Prénom Nom
+* Andy Sebahara
+* Zaid Chahbane
 
 ## Fonctionnalités obligatoires
 - [ ] Utilisation du gestionnaire de version git
